@@ -1,0 +1,128 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0-init" author="Dzianis_Zatsiupa">
+        <insert tableName="tags">
+            <column name="id" value="1"/>
+            <column name="name" value="sea"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="id" value="2"/>
+            <column name="name" value="mountains"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE tags_id_seq RESTART WITH 3;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.1-init" author="Dzianis_Zatsiupa">
+        <insert tableName="countries">
+            <column name="id" value="1"/>
+            <column name="name" value="russia"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="2"/>
+            <column name="name" value="german"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="3"/>
+            <column name="name" value="sweden"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="4"/>
+            <column name="name" value="britain"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="5"/>
+            <column name="name" value="poland"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE countries_id_seq RESTART WITH 6;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.2-init" author="Dzianis_Zatsiupa">
+        <insert tableName="cities">
+            <column name="id" value="1"/>
+            <column name="country_id" value="4"/>
+            <column name="name" value="city_1"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="2"/>
+            <column name="country_id" value="1"/>
+            <column name="name" value="city_17"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="3"/>
+            <column name="country_id" value="2"/>
+            <column name="name" value="city_3"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="4"/>
+            <column name="country_id" value="3"/>
+            <column name="name" value="city_2"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE cities_id_seq RESTART WITH 5;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.3-init" author="Dzianis_Zatsiupa">
+        <insert tableName="planes">
+            <column name="id" value="1" />
+            <column name="name" value="GAF Nomad" />
+            <column name="capacity" value="12" />
+            <column name="plane_model" value="GAF Nomad N.22" />
+        </insert>
+        <insert tableName="planes">
+            <column name="id" value="2" />
+            <column name="name" value="GAF Nomad" />
+            <column name="capacity" value="13" />
+            <column name="plane_model" value="GAF Nomad N.22B" />
+        </insert>
+        <insert tableName="planes">
+            <column name="id" value="3" />
+            <column name="name" value="GAF Nomad" />
+            <column name="capacity" value="17" />
+            <column name="plane_model" value="GAF Nomad N.24A" />
+        </insert>
+        <insert tableName="planes">
+            <column name="id" value="4" />
+            <column name="name" value="Challenger 600" />
+            <column name="capacity" value="14" />
+            <column name="plane_model" value="Challenger CL-600" />
+        </insert>
+        <insert tableName="planes">
+            <column name="id" value="5" />
+            <column name="name" value="Challenger 600" />
+            <column name="capacity" value="14" />
+            <column name="plane_model" value="Challenger CC-144" />
+        </insert>
+        <sql>
+            ALTER SEQUENCE planes_id_seq RESTART WITH 6;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.4-init" author="Dzianis_Zatsiupa">
+        <insert tableName="flights">
+            <column name="id" value="1"/>
+            <column name="name" value="flight 1"/>
+            <column name="plane_id" value="1"/>
+            <column name="city_from_id" value="1"/>
+            <column name="city_to_id" value="2"/>
+            <column name="leave_date" value="2022-05-25 12:21:00"/>
+            <column name="arrive_date" value="2022-05-25 22:21:00"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

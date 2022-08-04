@@ -1,0 +1,168 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="1.0.0" author="Dzianis_Zatsiupa">
+
+        <createTable tableName="tags">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="cities">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="1.0.1" author="Dzianis_Zatsiupa">
+
+        <createTable tableName="countries">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="1.0.2" author="Dzianis_Zatsiupa">
+        <addForeignKeyConstraint baseTableName="cities"
+                                 baseColumnNames="country_id"
+                                 constraintName="city_to_country_reference"
+                                 referencedTableName="countries"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="Dzianis_Zatsiupa">
+        <createTable tableName="planes">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="plane_model" type="varchar(255)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="capacity" type="int" >
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="flights">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="city_from_id" type="bigint">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="city_to_id" type="bigint">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="plane_id" type="bigint" >
+                <constraints  unique="false" nullable="false"/>
+            </column>
+            <column name="leave_date" type="datetime" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="arrive_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="Dzianis_Zatsiupa">
+        <createTable tableName="tag_to_flight">
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flight_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="tag_to_flight" columnNames="flight_id, tag_id"/>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="Dzianis_Zatsiupa">
+        <addForeignKeyConstraint baseTableName="tag_to_flight"
+                                 baseColumnNames="tag_id"
+                                 constraintName="tag_to_flight_reference"
+                                 referencedTableName="tags"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+        <addForeignKeyConstraint baseTableName="tag_to_flight"
+                                 baseColumnNames="flight_id"
+                                 constraintName="flight_to_tag_reference"
+                                 referencedTableName="flights"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="Dzianis_Zatsiupa">
+        <addForeignKeyConstraint baseTableName="flights"
+                                 baseColumnNames="plane_id"
+                                 constraintName="flight_to_plane_reference"
+                                 referencedTableName="planes"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+        <addForeignKeyConstraint baseTableName="flights"
+                                 baseColumnNames="city_from_id"
+                                 constraintName="flight_to_end_city_reference"
+                                 referencedTableName="cities"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+        <addForeignKeyConstraint baseTableName="flights"
+                                 baseColumnNames="city_to_id"
+                                 constraintName="flight_to_start_city_reference"
+                                 referencedTableName="cities"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+
+    </changeSet>
+
+</databaseChangeLog>
