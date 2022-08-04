@@ -1,0 +1,87 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="1.0.0" author="Dzianis_Zatsiupa">
+
+        <createTable tableName="tags">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tours">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="datetime" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="hotel_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="flight_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="country_id" type="bigint">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="countries">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="Dzianis_Zatsiupa">
+        <createTable tableName="tags_to_tours">
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tour_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="Dzianis_Zatsiupa">
+        <addUniqueConstraint tableName="tags_to_tours" columnNames="tag_id,tour_id"/>
+
+        <addForeignKeyConstraint baseTableName="tags_to_tours"
+                                 baseColumnNames="tour_id"
+                                 constraintName="tour_to_tag_reference"
+                                 referencedTableName="tours"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+        <addForeignKeyConstraint baseTableName="tags_to_tours"
+                                 baseColumnNames="tag_id"
+                                 constraintName="tag_to_tour_reference"
+                                 referencedTableName="tags"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+</databaseChangeLog>
