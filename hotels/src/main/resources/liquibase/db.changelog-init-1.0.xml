@@ -1,0 +1,306 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0-init" author="Dzianis_Zatsiupa">
+        <insert tableName="languages">
+            <column name="id" value="1"/>
+            <column name="name" value="english"/>
+        </insert>
+        <insert tableName="languages">
+            <column name="id" value="2"/>
+            <column name="name" value="russian"/>
+        </insert>
+        <insert tableName="languages">
+            <column name="id" value="3"/>
+            <column name="name" value="swedish"/>
+        </insert>
+        <insert tableName="languages">
+            <column name="id" value="4"/>
+            <column name="name" value="german"/>
+        </insert>
+        <insert tableName="languages">
+            <column name="id" value="5"/>
+            <column name="name" value="polish"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE languages_id_seq RESTART WITH 6;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.1-init" author="Dzianis_Zatsiupa">
+        <insert tableName="currency_types">
+            <column name="id" value="1"/>
+            <column name="name" value="byn"/>
+        </insert>
+        <insert tableName="currency_types">
+            <column name="id" value="2"/>
+            <column name="name" value="euro"/>
+        </insert>
+        <insert tableName="currency_types">
+            <column name="id" value="3"/>
+            <column name="name" value="dollar"/>
+        </insert>
+        <insert tableName="currency_types">
+            <column name="id" value="4"/>
+            <column name="name" value="cron"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE currency_types_id_seq RESTART WITH 5;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.2-init" author="Dzianis_Zatsiupa">
+        <insert tableName="services">
+            <column name="id" value="1"/>
+            <column name="name" value="lunch"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="2"/>
+            <column name="name" value="breakfast"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="services">
+            <column name="id" value="3"/>
+            <column name="name" value="dinner"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE services_id_seq RESTART WITH 5;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.3-init" author="Dzianis_Zatsiupa">
+        <insert tableName="tags">
+            <column name="id" value="1"/>
+            <column name="name" value="sea"/>
+        </insert>
+        <insert tableName="tags">
+            <column name="id" value="2"/>
+            <column name="name" value="mountains"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE tags_id_seq RESTART WITH 3;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.4-init" author="Dzianis_Zatsiupa">
+        <insert tableName="countries">
+            <column name="id" value="1"/>
+            <column name="name" value="russia"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="2"/>
+            <column name="name" value="german"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="3"/>
+            <column name="name" value="sweden"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="4"/>
+            <column name="name" value="britain"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="countries">
+            <column name="id" value="5"/>
+            <column name="name" value="poland"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE countries_id_seq RESTART WITH 6;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.5-init" author="Dzianis_Zatsiupa">
+        <insert tableName="cities">
+            <column name="id" value="1"/>
+            <column name="country_id" value="4"/>
+            <column name="name" value="city_1"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="2"/>
+            <column name="country_id" value="1"/>
+            <column name="name" value="city_17"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="3"/>
+            <column name="country_id" value="2"/>
+            <column name="name" value="city_3"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="cities">
+            <column name="id" value="4"/>
+            <column name="country_id" value="3"/>
+            <column name="name" value="city_2"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE cities_id_seq RESTART WITH 5;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.6-init" author="Dzianis_Zstsiupa">
+        <insert tableName="excursions">
+            <column name="id" value="1"/>
+            <column name="name" value="lure excursion"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="excursions">
+            <column name="id" value="2"/>
+            <column name="name" value="excursion_1"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="excursions">
+            <column name="id" value="3"/>
+            <column name="name" value="excursion_2"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="excursions">
+            <column name="id" value="4"/>
+            <column name="name" value="excursion_3"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="excursions">
+            <column name="id" value="5"/>
+            <column name="name" value="excursion_4"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE excursions_id_seq RESTART WITH 6;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.7-init" author="Dzianis_Zatsiupa">
+        <insert tableName="hotels">
+            <column name="id" value="1"/>
+            <column name="city_id" value="2"/>
+            <column name="name" value="large hotel"/>
+            <column name="places_available" value="11"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="hotels">
+            <column name="id" value="2"/>
+            <column name="city_id" value="2"/>
+            <column name="name" value="big hotel"/>
+            <column name="places_available" value="11"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="hotels">
+            <column name="id" value="3"/>
+            <column name="city_id" value="2"/>
+            <column name="name" value="small hotel"/>
+            <column name="places_available" value="11"/>
+            <column name="description" value="none"/>
+        </insert>
+        <insert tableName="hotels">
+            <column name="id" value="4"/>
+            <column name="city_id" value="2"/>
+            <column name="name" value="tiny hotel"/>
+            <column name="places_available" value="11"/>
+            <column name="description" value="none"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE hotels_id_seq RESTART WITH 5;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.8-init" author="Dzianis_Zatsiupa">
+        <insert tableName="tags_to_hotels">
+            <column name="tag_id" value="1"/>
+            <column name="hotel_id" value="1"/>
+        </insert>
+        <insert tableName="tags_to_hotels">
+            <column name="tag_id" value="2"/>
+            <column name="hotel_id" value="1"/>
+        </insert>
+        <insert tableName="tags_to_hotels">
+            <column name="tag_id" value="2"/>
+            <column name="hotel_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.9-init" author="Dzianis_Zatsiupa">
+        <insert tableName="services_to_hotels">
+            <column name="hotel_id" value="1"/>
+            <column name="service_id" value="1"/>
+        </insert>
+        <insert tableName="services_to_hotels">
+            <column name="hotel_id" value="2"/>
+            <column name="service_id" value="1"/>
+        </insert>
+        <insert tableName="services_to_hotels">
+            <column name="hotel_id" value="1"/>
+            <column name="service_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.10-init" author="Dzianis_Zatsiupa">
+        <insert tableName="excursions_to_hotels">
+            <column name="hotel_id" value="1"/>
+            <column name="excursion_id" value="1"/>
+        </insert>
+        <insert tableName="excursions_to_hotels">
+            <column name="hotel_id" value="1"/>
+            <column name="excursion_id" value="2"/>
+        </insert>
+        <insert tableName="excursions_to_hotels">
+            <column name="hotel_id" value="1"/>
+            <column name="excursion_id" value="3"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.11-init" author="Dzianis_Zatsiupa">
+        <insert tableName="currency_to_country">
+            <column name="country_id" value="1"/>
+            <column name="currency_id" value="1"/>
+        </insert>
+        <insert tableName="currency_to_country">
+            <column name="country_id" value="2"/>
+            <column name="currency_id" value="2"/>
+        </insert>
+        <insert tableName="currency_to_country">
+            <column name="country_id" value="3"/>
+            <column name="currency_id" value="2"/>
+        </insert>
+        <insert tableName="currency_to_country">
+            <column name="country_id" value="4"/>
+            <column name="currency_id" value="2"/>
+        </insert>
+        <insert tableName="currency_to_country">
+            <column name="country_id" value="5"/>
+            <column name="currency_id" value="2"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="1.0.12-init" author="Dzianis_Zatsiupa">
+        <insert tableName="language_to_country">
+            <column name="country_id" value="1"/>
+            <column name="language_id" value="1"/>
+        </insert>
+        <insert tableName="language_to_country">
+            <column name="country_id" value="2"/>
+            <column name="language_id" value="4"/>
+        </insert>
+        <insert tableName="language_to_country">
+            <column name="country_id" value="3"/>
+            <column name="language_id" value="3"/>
+        </insert>
+        <insert tableName="language_to_country">
+            <column name="country_id" value="4"/>
+            <column name="language_id" value="1"/>
+        </insert>
+        <insert tableName="language_to_country">
+            <column name="country_id" value="5"/>
+            <column name="language_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

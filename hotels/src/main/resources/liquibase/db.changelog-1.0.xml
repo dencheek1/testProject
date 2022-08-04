@@ -1,0 +1,304 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="1.0.0" author="Dzianis_Zatsiupa" >
+
+        <createTable tableName="languages">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tags">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="services">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="cities">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="country_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="excursions">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="1.0.1" author="Dzianis_Zatsiupa">
+
+        <createTable tableName="hotels">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="places_available" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="services_to_hotels">
+            <column name="hotel_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="service_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="excursions_to_hotels">
+            <column name="hotel_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="excursion_id" autoIncrement="true" type="bigint">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="1.0.2" author="Dzianis_Zatsiupa">
+
+        <addUniqueConstraint tableName="excursions_to_hotels" columnNames="hotel_id, excursion_id"/>
+
+        <addForeignKeyConstraint baseTableName="excursions_to_hotels"
+                                 baseColumnNames="hotel_id"
+                                 constraintName="hotel_to_excursion_reference"
+                                 referencedTableName="hotels"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"
+        />
+
+        <addForeignKeyConstraint baseTableName="excursions_to_hotels"
+                                 baseColumnNames="excursion_id"
+                                 constraintName="excursion_to_hotel_reference"
+                                 referencedTableName="excursions"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"
+        />
+    </changeSet>
+
+    <changeSet id="1.0.3" author="Dzianis_Zatsiupa">
+        <addUniqueConstraint tableName="services_to_hotels" columnNames="hotel_id, service_id"/>
+        <addForeignKeyConstraint baseTableName="services_to_hotels"
+                                 baseColumnNames="hotel_id"
+                                 constraintName="hotel_to_service_reference"
+                                 referencedTableName="hotels"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"
+        />
+        <addForeignKeyConstraint baseTableName="services_to_hotels"
+                                 baseColumnNames="service_id"
+                                 constraintName="service_to_hotel_reference"
+                                 referencedTableName="services"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"
+        />
+    </changeSet>
+
+    <changeSet id="1.0.4" author="Dzianis_Zatsiupa">
+
+        <createTable tableName="countries">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="description" type="varchar(2048)">
+                <constraints unique="false" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="currency_types">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="currency_to_country">
+            <column name="country_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency_id" autoIncrement="true" type="bigint">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="language_to_country">
+            <column name="country_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language_id" autoIncrement="true" type="bigint">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+    <changeSet id="1.0.5" author="Dzianis_Zatsiupa">
+
+        <addUniqueConstraint tableName="currency_to_country" columnNames="country_id, currency_id"/>
+
+        <addForeignKeyConstraint baseTableName="currency_to_country"
+                                 baseColumnNames="country_id"
+                                 constraintName="country_to_currency_reference"
+                                 referencedTableName="countries"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+
+        <addForeignKeyConstraint baseTableName="currency_to_country"
+                                 baseColumnNames="currency_id"
+                                 constraintName="currency_to_country_reference"
+                                 referencedTableName="currency_types"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="Dzianis_Zatsiupa">
+
+        <addUniqueConstraint tableName="language_to_country" columnNames="country_id, language_id"/>
+
+        <addForeignKeyConstraint baseTableName="language_to_country"
+                                 baseColumnNames="country_id"
+                                 constraintName="country_to_language_reference"
+                                 referencedTableName="countries"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+
+        <addForeignKeyConstraint baseTableName="language_to_country"
+                                 baseColumnNames="language_id"
+                                 constraintName="language_to_country_reference"
+                                 referencedTableName="languages"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.7" author="Dzianis_Zatsiupa">
+        <createTable tableName="tags_to_hotels">
+            <column name="hotel_id" autoIncrement="true" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" autoIncrement="true" type="bigint">
+                <constraints  nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="Dzianis_Zatsiupa">
+
+        <addUniqueConstraint tableName="tags_to_hotels" columnNames="hotel_id, tag_id"/>
+
+        <addForeignKeyConstraint baseTableName="tags_to_hotels"
+                                 baseColumnNames="hotel_id"
+                                 constraintName="hotel_to_tag_reference"
+                                 referencedTableName="hotels"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+
+        <addForeignKeyConstraint baseTableName="tags_to_hotels"
+                                 baseColumnNames="tag_id"
+                                 constraintName="tag_to_hotel_reference"
+                                 referencedTableName="tags"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+    </changeSet>
+
+    <changeSet id="1.0.9" author="Dzianis_Zatsiupa">
+        
+        <addForeignKeyConstraint baseTableName="cities"
+                                 baseColumnNames="country_id"
+                                 constraintName="city_to_country_reference"
+                                 referencedTableName="countries"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+
+        <addForeignKeyConstraint baseTableName="hotels"
+                                 baseColumnNames="city_id"
+                                 constraintName="hotel_to_city_reference"
+                                 referencedTableName="cities"
+                                 referencedColumnNames="id"
+                                 deleteCascade="true"/>
+
+    </changeSet>
+
+
+
+</databaseChangeLog>
