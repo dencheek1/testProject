@@ -1,0 +1,128 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="1.0.1" author="Dzianis_Zatsiupa">
+        <createTable tableName="users">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="Dzianis_Zatsiupa" >
+        <createTable tableName="roles">
+            <column name="id" autoIncrement="true" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="created" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="date" defaultValue="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="Dzianis_Zatsiupa">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGINT">
+            </column>
+
+            <column name="role_id" type="BIGINT">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="Dzianis_Zatsiupa">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_user_roles_user"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="Dzianis_Zatsiupa">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="user_roles"
+                                 constraintName="fk_user_roles_roles"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="roles"/>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="Dzianis_Zatsiupa">
+        <insert tableName="roles">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="id" value="3"/>
+            <column name="name" value="ROLE_TOUR_OPERATOR"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE roles_id_seq RESTART WITH 4;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.7"  author="Dzianis_Zatsiupa">
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="email" value="aaaa@mail.mail"/>
+            <column name="password" value="$2a$10$DIxRQekR8J0TG.hPQPr/S.vhSiPAQyzTKQdO/s6jXbI3j5O2S4KOu"/>
+            <column name="username" value="admin"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="2"/>
+            <column name="email" value="bbbb@mail.mail"/>
+            <column name="password" value="$2a$10$DIxRQekR8J0TG.hPQPr/S.vhSiPAQyzTKQdO/s6jXbI3j5O2S4KOu"/>
+            <column name="username" value="user"/>
+        </insert>
+        <sql>
+            ALTER SEQUENCE users_id_seq RESTART WITH 3;
+        </sql>
+    </changeSet>
+
+    <changeSet id="1.0.8"  author="Dzianis_Zatsiupa">
+        <insert tableName="user_roles">
+            <column name="role_id" value="2"/>
+            <column name="user_id" value="1"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="role_id" value="2"/>
+            <column name="user_id" value="1"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
